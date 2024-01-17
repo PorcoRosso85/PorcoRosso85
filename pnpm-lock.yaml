@@ -70,7 +70,11 @@ importers:
 
   lib/auth: {}
 
-  lib/core: {}
+  lib/core:
+    devDependencies:
+      hono:
+        specifier: ^3.12.5
+        version: 3.12.5
 
   lib/postgres:
     dependencies:
@@ -1794,7 +1798,6 @@ packages:
   /hono@3.12.5:
     resolution: {integrity: sha512-oIuZfMGwk/IUIAOW+9/VZhT4g99Wce39GYBs2nhY7386iYFAprI8vF2/+nfXjzlrY+CXGJ0+GxF833nN0oRp2w==}
     engines: {node: '>=16.0.0'}
-    dev: false
 
   /html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
