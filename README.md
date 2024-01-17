@@ -1,22 +1,10 @@
-## 企業内に経済圏を実装するアプリのモデル
+## About me
 
-企業内に経済圏を作る場合の基本的なアプリケーションモデルを実装します
+A father
 
-経済圏を作るひとつの目的は、企業という一種のコミュニティの価値交換機能を実装し、活性化を図ることが挙げられます
+## Setup me
 
-企業内は一つのコミュニティの例であり,
-各種SNSにも適応可能です
-
-### 画面推移
-
-![view transition](<Screenshot 2024-01-17 072921.png>)
-### データモデル
-
-※RDBMSの場合
-
-![data model](<Screenshot 2024-01-17 073533.png>)
-
-## Env
+### Env
 
 - windows 11
 - wsl2 / ubuntu22.04
@@ -26,7 +14,7 @@
 - biome 1.5.1
 - testcontainer 10.4.0
 
-## Stack
+### Stack
 
 - typescript
 - hono / jsx
@@ -35,58 +23,6 @@
 - cloudflare workers / d1
 - htmx
 
-## Usage
+### Usage
 
-Install:
-
-```
-npm install
-```
-
-Setup:
-
-```
-wrangler d1 create todo
-wrangler d1 execute todo --local --file=todo.sql
-```
-
-Dev:
-
-```
-npm run dev
-```
-
-Deploy:
-
-```
-npm run deploy
-```
-
-## Author
-
-Tetsuya Takasawa
-
-## License
-
-MIT
-
-## Directory
-- src
-- packages
-    - domain
-      - core
-    - infra
-      - d1
-      - postgres
-      - worker
-      - hono
-    - app
-      - features
-    - view
-      - components
-
-## Dependency
-- core / domain
-    - infra
-      - app
-        - view
+- praise me
