@@ -45,6 +45,9 @@ importers:
 
   lib/app:
     dependencies:
+      '@PorcoRosso85/core':
+        specifier: workspace:^
+        version: link:../core
       '@PorcoRosso85/postgresql':
         specifier: workspace:^
         version: link:../postgres

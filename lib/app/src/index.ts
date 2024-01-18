@@ -1,2 +1,2 @@
-// export { economyHonoApp, endpoints } from './route'
-export { app } from './route/states'
+// []app層とweb層の分離
+export { app } from './route'

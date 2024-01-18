@@ -14,10 +14,3 @@ export const config = {
     LOCK_TIME: 2 * 60 * 60 * 1000, // 2 hours, lock time is for duration of lock to login
   },
 }
-
-/**
- * this file is required for using jwt in vitest
- */
-
-import * as crypto from 'crypto'
-global.crypto = crypto
