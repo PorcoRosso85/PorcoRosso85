@@ -17,7 +17,7 @@ export { states }
  */
 export interface Design {
   on?: {
-    [event: MethodEndpoint]:
+    [event: string]:
       | {
           target: string
           cond?: string
@@ -27,19 +27,29 @@ export interface Design {
   }
   initial?: string
   states?: {
-    [subState: string]: States
+    [subStateName: string]: Designs
   }
   description?: string
 }
 
-type States = {
+type Designs = {
   [stateName: string]: Design
 }
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
-type Endpoint = string // エンドポイントは任意の文字列を許容
 
-type MethodEndpoint = `${HttpMethod}__${Endpoint}`
+type Endpoint = string
+
+// [] Endpointを設計依存にする
+export type MethodEndFormat = `${HttpMethod}__${Endpoint}`
+
+const design: Design = {
+  on: {
+    'GET__///': {
+      target: 'GET__/'
+    }
+  },
+  }
 
 /**
  * この型は、Web機能を表現する型です。
