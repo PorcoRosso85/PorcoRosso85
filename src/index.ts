@@ -1,3 +1,3 @@
-import { app } from "@PorcoRosso85/app";
+import { app } from '@PorcoRosso85/web'
 
-export default app;
+export default app
