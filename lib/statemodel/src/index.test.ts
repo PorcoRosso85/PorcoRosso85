@@ -1,7 +1,7 @@
-import { createMachine } from 'xstate'
+import { describe, test, expect } from 'vitest'
 
-export const machine = createMachine(
-  {
+describe('stateModel', () => {
+  const statesExample = {
     id: 'app',
     initial: '/',
     states: {
@@ -52,9 +52,6 @@ export const machine = createMachine(
                   '2': {
                     target: '/transaction_item',
                   },
-                  '3': {
-                    target: '/item_info',
-                  },
                   '5': {
                     target: '/update_user',
                   },
@@ -68,8 +65,13 @@ export const machine = createMachine(
               },
               '/user_info': {
                 states: {
-                  'ユーザー情報を取得するクエリ { users }': {},
-                  'ユーザーの権限を確認するクエリ { users, roles }': {},
+                  'name: GetUser :one': {
+                    description: 'ユーザー情報を取得するクエリ { users }',
+                  },
+                  'name: GetUserRole :one': {
+                    description:
+                      'ユーザーの権限を確認するクエリ, userテーブル、roleテーブル、user_id、',
+                  },
                 },
                 type: 'parallel',
               },
@@ -121,7 +123,7 @@ export const machine = createMachine(
                         {},
                       '勘定科目生成を実行するクエリ,生成された勘定科目は1つのuser_idをownerとして保持する -> { items }':
                         {},
-                      ユーザー登録時自動的にitemを生成するクエリ: {},
+                      'ユーザー登録時自動的にitemを生成するクエリ＜アプリケーションで対応する': {},
                     },
                     type: 'parallel',
                   },
@@ -137,7 +139,10 @@ export const machine = createMachine(
                       },
                       '/invitation_history': {
                         states: {
-                          オーダーから招待履歴を取得するクエリ: {},
+                          'name: GetOrderHistory :many': {
+                            description: 'オーダーから招待履歴を取得するクエリ',
+                            tags: ``,
+                          },
                         },
                         type: 'parallel',
                       },
@@ -151,15 +156,11 @@ export const machine = createMachine(
                   },
                 },
               },
-              '/item_info': {
-                states: {
-                  'ユーザーが持つすべての勘定科目情報を取得  -> {items}': {},
-                },
-                type: 'parallel',
-              },
               '/delete_user': {
                 states: {
-                  ユーザーを削除するクエリ: {},
+                  'name: DeleteUser :one': {
+                    description: 'ユーザー削除、userテーブル',
+                  },
                 },
                 type: 'parallel',
               },
@@ -243,6 +244,9 @@ export const machine = createMachine(
         states: {
           '/': {
             on: {
+              '5': {
+                target: '/info',
+              },
               div: {
                 target: '/list',
               },
@@ -292,6 +296,13 @@ export const machine = createMachine(
           '/delete': {
             states: {
               該当roleを削除するクエリ: {},
+            },
+            type: 'parallel',
+          },
+          '/info': {
+            states: {
+              ロール情報を取得するクエリ: {},
+              ロール情報からユーザープランを取得するクエリ: {},
             },
             type: 'parallel',
           },
@@ -395,33 +406,43 @@ export const machine = createMachine(
         | { type: '5' }
         | { type: '6' }
         | { type: '7' }
-        | { type: 'click' }
-        | { type: 'button_get__/permission' }
-        | { type: 'button_get__/role' }
-        | { type: 'Event 5' }
-        | { type: 'authed' }
         | { type: 'div' }
-        | { type: 'button_get__/role/register' }
-        | { type: 'get__/role/edit' }
-        | { type: 'delete__/role/delete' }
-        | { type: 'next' }
-        | { type: 'button_post__/order/:orderId' }
         | { type: 'url' }
+        | { type: 'next' }
+        | { type: 'click' }
+        | { type: 'authed' }
+        | { type: 'Event 5' }
+        | { type: 'get__/role/edit' }
+        | { type: 'button_get__/role' }
+        | { type: 'delete__/role/delete' }
+        | { type: 'button_get__/permission' }
+        | { type: 'button_get__/role/register' }
+        | { type: 'button_post__/order/:orderId' }
         | { type: 'button_get__/order/info/:feature' }
         | { type: 'button_post__/order/:orderId/cancel' },
     },
-  },
-  {
-    actions: {},
-    actors: {},
-    guards: {
-      login: ({ context, event }, params) => {
-        return false
-      },
-      logout: ({ context, event }, params) => {
-        return false
-      },
-    },
-    delays: {},
-  },
-)
+  }
+
+  describe('extractParallelStates', () => {
+    test('parallel検知できているか')
+    test('ネストされた状態を処理できているか')
+  })
+
+  describe('writeToSQLFile', () => {
+    test('ファイルが存在しない場合、新規作成できているか')
+    test('ファイルが存在する場合、追記できているか、重複は除外されているか')
+
+    /**
+     * @example
+     * const comments = [
+     *  'ユーザー情報を取得するクエリ { users }',
+     * 'ユーザーの権限を確認するクエリ, userテーブル、roleテーブル、user_id、',
+     * ]
+     *
+     * output:
+     * -- ユーザー情報を取得するクエリ { users }
+     * -- ユーザーの権限を確認するクエリ, userテーブル、roleテーブル、user_id、
+     */
+    test('表現が正しいか')
+  })
+})
