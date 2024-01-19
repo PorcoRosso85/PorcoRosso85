@@ -1,33 +1,16 @@
-import fs from 'fs'
-import path from 'path'
-import { machine } from '../example/machineObject'
+import { extractParallelStates } from './extractParallelStates'
+import { writeToSQLFile } from './writeToSQLFile'
 
-// 抽出関数
-function extractParallelStates(machine: any, baseKey = ''): string[] {
-  let results: string[] = []
-  for (const key in machine.states) {
-    const state = machine.states[key]
-    const fullKey = baseKey ? `${baseKey}.${key}` : key
-    if (state.type === 'parallel') {
-      for (const innerKey in state.states) {
-        results.push(`${fullKey}.${innerKey}`)
-      }
-    }
-    // ネストされた状態を処理するための再帰呼び出し
-    if (state.states) {
-      results = [...results, ...extractParallelStates(state, fullKey)]
-    }
-  }
-  return results
+// 外部から抽出と生成を実行するための関数
+function stateModel(machine: any, filePath: string) {
+  const comments = extractParallelStates(machine)
+  writeToSQLFile(comments, filePath)
 }
 
-// 抽出した情報をSQLファイルに書き込む関数
-function writeToSQLFile(comments: string[], filePath: string) {
-  const commentStr = comments.map((c) => `-- ${c}`).join('\n\n')
-  fs.appendFileSync(filePath, commentStr)
-}
+export default stateModel
 
-// 実行
-const comments = extractParallelStates(machine)
-const filePath = path.resolve(__dirname, 'fromState.sql')
-writeToSQLFile(comments, filePath)
+// mainの使い方
+// import machine from './structure'
+// import main from './index'
+//
+// const filePath = path.resolve(__dirname, 'fromState.sql')
