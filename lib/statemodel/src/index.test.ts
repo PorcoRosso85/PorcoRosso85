@@ -1,5 +1,4 @@
 import { describe, test, expect } from 'vitest'
-import { extractParallelStates } from './extractParallelStates'
 
 describe('stateModel', () => {
   const statesExample = {
