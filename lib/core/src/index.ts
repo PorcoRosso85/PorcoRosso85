@@ -9,3 +9,4 @@
 // app層：ビジネスロジックやユースケースの実装
 export { Bindings } from './application/types/config'
 export { TFeatures, TTest, TMethodEnds } from './application'
+export { states } from './application/types/structure'

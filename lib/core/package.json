@@ -10,6 +10,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@PorcoRosso85/statemodel": "workspace:^",
     "hono": "^3.12.5"
+  },
+  "dependencies": {
+    "@PorcoRosso85/postgresql": "workspace:^"
   }
 }

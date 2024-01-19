@@ -12,6 +12,7 @@ sql:
     schema: "./src/sql/schema.sql"
     queries: 
       - "./src/sql/query.sql"
+      - "./src/sql/query.design.sql"
     # database:
     #   managed: true
     codegen:

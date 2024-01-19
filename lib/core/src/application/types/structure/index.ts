@@ -36,20 +36,25 @@ type Designs = {
   [stateName: string]: Design
 }
 
+export interface DesignAddedDML extends Design {
+  query: {
+    [key in string]: string
+  }
+  states?: {
+    [subStateName: string]: DesignAddedDMLs
+  }
+}
+
+type DesignAddedDMLs = {
+  [stateName: string]: DesignAddedDML
+}
+
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
 type Endpoint = string
 
 // [] Endpointを設計依存にする
 export type MethodEndFormat = `${HttpMethod}__${Endpoint}`
-
-const design: Design = {
-  on: {
-    'GET__///': {
-      target: 'GET__/'
-    }
-  },
-  }
 
 /**
  * この型は、Web機能を表現する型です。

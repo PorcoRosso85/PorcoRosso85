@@ -2,9 +2,9 @@
  * このディレクトリは、
  * 設計情報に基づいたDMLクエリを実装するための
  * 契約を定義するためのディレクトリです。
- */
+ */ g
 
-import { states, DesignAddedDML } from '../structure'
+import { states } from '@PorcoRosso85/core'
 import { stateModel } from '@PorcoRosso85/statemodel'
 import path from 'path'
 
