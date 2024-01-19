@@ -4,7 +4,7 @@ export interface SQLComment {
   description: string | undefined
 }
 
-export type BlockFormatFunction = (comment: SQLComment) => string
+export type BlockFormatFunction = (comment: SQLComment, format: string[]) => string
 
 export interface BlockValidationResult {
   isValid: boolean
