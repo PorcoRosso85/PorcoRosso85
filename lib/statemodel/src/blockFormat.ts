@@ -5,4 +5,4 @@ export const blockFormatFunction: BlockFormatFunction = (
   comment: SQLComment,
   blockFormat: string[],
 ) =>
-  `-- ${blockFormat[0]}\n-- ${comment.endpointKey}\n-- ${comment.keyInParallel}\n-- ${comment.description}\n\n-- ${blockFormat[1]}\n\n`
+  `${blockFormat[0]}-- ${comment.endpointKey}\n-- ${comment.keyInParallel}\n-- ${comment.description}\n\n${blockFormat[1]}`
