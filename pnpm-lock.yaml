@@ -75,6 +75,9 @@ importers:
 
   lib/core:
     devDependencies:
+      '@PorcoRosso85/statemodel':
+        specifier: workspace:^
+        version: link:../statemodel
       hono:
         specifier: ^3.12.5
         version: 3.12.5
