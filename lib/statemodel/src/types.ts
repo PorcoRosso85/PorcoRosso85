@@ -1,10 +1,15 @@
 export interface SQLComment {
   endpointKey: string
-  keyInParallel: string | undefined
-  description: string | undefined
+  keyInParallel: string
+  description: string
 }
 
-export type BlockFormatFunction = (comment: SQLComment, format: string[]) => string
+export interface PrefixedSQLComment extends SQLComment {
+  blockTop: string
+  blockBottom: string
+}
+
+export type BlockFormatFunction = (comment: SQLComment, format: string[]) => SQLComment
 
 export interface BlockValidationResult {
   isValid: boolean

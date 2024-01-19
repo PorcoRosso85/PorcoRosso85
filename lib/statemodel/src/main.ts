@@ -1,23 +1,30 @@
 import { SQLComment } from './types'
-import { blockFormatFunction } from './blockFormat'
+import { blockedSQLComment } from './blockedSQLComment'
 import { extractCommentBlock } from './extractCommentBlock'
 import fs from 'fs'
 import { promisify } from 'util'
 
-export async function main(state: any, filePath: string) {
+export async function stateModel(
+  state: any,
+  filePath: {
+    query: string
+    schema: string
+  },
+) {
   const comments: SQLComment[] = extractCommentBlock(state)
 
   const blockFormat = [
-    '-- BEGIN------------------------------\n',
-    '-- ------------------------------END\n\n',
+    '-- BEGIN------------------------------',
+    '-- ------------------------------END',
   ]
 
   const readFile = promisify(fs.readFile)
   const appendFile = promisify(fs.appendFile)
 
   try {
-    const newData = []
-    if (fs.existsSync(filePath)) {
+    const newQuery = []
+    const newSchema = []
+    if (fs.existsSync(filePath.query)) {
       /**
        * @example
 
@@ -38,30 +45,56 @@ export async function main(state: any, filePath: string) {
 
 
        */
-      const data = await readFile(filePath, 'utf8')
+      const data = await readFile(filePath.query, 'utf8')
 
       const regex = new RegExp(`${blockFormat[0]}([\\s\\S]*?)${blockFormat[1]}`, 'gm')
       const dataBlocks: string[] = data.match(regex) || []
 
       for (const comment of comments) {
         comment.description = comment.description || ''
-        const formattedCommentBlock = blockFormatFunction(comment, blockFormat)
+        // const formattedCommentBlock = blockFormatFunction(comment, blockFormat)
+        const bsc = blockedSQLComment(comment, '-- ', {
+          blockTop: blockFormat[0],
+          blockBottom: blockFormat[1],
+        })
 
-        // formattedCommentBlodkがdataBlocksに含まれていない場合のみ追加
-        if (!dataBlocks.includes(formattedCommentBlock)) {
-          newData.push(formattedCommentBlock)
+        /**
+         * formattedCommentBlodkがdataBlocksに含まれていない場合のみ追加
+         * 含まれているか含まれていないかの判断は、
+         * ブロック内全体を文字列として比較するのではなく、
+         * ブロック内のプロパティのみを比較する
+         */
+
+        // [] fix, どうしても含まれていない扱いになってしまう
+        if (!dataBlocks.includes(bsc.endpointKey) && !dataBlocks.includes(bsc.keyInParallel)) {
+          newQuery.push(
+            `${bsc.blockTop}\n${bsc.endpointKey}\n${bsc.keyInParallel}\n${bsc.description}\n\n${bsc.blockBottom}\n\n`,
+          )
+          newSchema.push(`${bsc.description}\n`)
         }
       }
     } else {
       for (const comment of comments) {
         comment.description = comment.description || ''
-        const formattedCommentBlock = blockFormatFunction(comment, blockFormat)
-        newData.push(formattedCommentBlock)
+        // const formattedCommentBlock = blockFormatFunction(comment, blockFormat)
+        const bsc = blockedSQLComment(comment, '-- ', {
+          blockTop: blockFormat[0],
+          blockBottom: blockFormat[1],
+        })
+        newQuery.push(
+          `${bsc.blockTop}\n${bsc.endpointKey}\n${bsc.keyInParallel}\n${bsc.description}\n\n${bsc.blockBottom}\n\n`,
+        )
+        newSchema.push(`${bsc.description}\n`)
       }
     }
 
-    appendFile(filePath, `${newData.join('\n')}`, 'utf8')
+    appendFile(filePath.query, `${newQuery.join('\n')}`, 'utf8')
+    appendFile(filePath.schema, `${newSchema.join('\n')}`, 'utf8')
   } catch (err) {
     console.error(err)
   }
 }
+
+const genQueryFile = async (state: any, filePath: string) => {}
+
+const genSchemaFile = async (state: any, filePath: string) => {}

@@ -20,6 +20,7 @@ export function extractCommentBlock(state: any, baseKey = ''): SQLComment[] {
     const endpointKey = baseKey ? `${baseKey}.${key}` : key
     if (state.type === 'parallel') {
       for (const keyInParallel in state.states) {
+        // [] endpointkeyが、keyInParallelを含んでしまっている
         results.push({ endpointKey, keyInParallel, description: newState.description })
       }
     }
