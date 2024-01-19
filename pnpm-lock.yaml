@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@PorcoRosso85/app':
+      '@PorcoRosso85/web':
         specifier: workspace:^
-        version: link:lib/app
+        version: link:lib/web
     devDependencies:
       '@biomejs/biome':
         specifier: 1.4.1
@@ -45,6 +45,9 @@ importers:
 
   lib/app:
     dependencies:
+      '@PorcoRosso85/core':
+        specifier: workspace:^
+        version: link:../core
       '@PorcoRosso85/postgresql':
         specifier: workspace:^
         version: link:../postgres
@@ -71,16 +74,20 @@ importers:
   lib/auth: {}
 
   lib/core:
+    dependencies:
+      '@PorcoRosso85/postgresql':
+        specifier: workspace:^
+        version: link:../postgres
     devDependencies:
+      '@PorcoRosso85/statemodel':
+        specifier: workspace:^
+        version: link:../statemodel
       hono:
         specifier: ^3.12.5
         version: 3.12.5
 
   lib/postgres:
     dependencies:
-      '@PorcoRosso85/core':
-        specifier: workspace:^
-        version: link:../core
       '@types/pg':
         specifier: ^8.10.9
         version: 8.10.9
@@ -88,6 +95,12 @@ importers:
         specifier: ^8.11.3
         version: 8.11.3
     devDependencies:
+      '@PorcoRosso85/core':
+        specifier: workspace:^
+        version: link:../core
+      '@PorcoRosso85/statemodel':
+        specifier: workspace:^
+        version: link:../statemodel
       '@testcontainers/postgresql':
         specifier: ^10.4.0
         version: 10.6.0
@@ -96,6 +109,34 @@ importers:
         version: 10.6.0
 
   lib/statemodel: {}
+
+  lib/web:
+    dependencies:
+      '@PorcoRosso85/core':
+        specifier: workspace:^
+        version: link:../core
+      '@PorcoRosso85/postgresql':
+        specifier: workspace:^
+        version: link:../postgres
+      '@hono/typebox-validator':
+        specifier: ^0.2.2
+        version: 0.2.2(@sinclair/typebox@0.31.28)(hono@3.12.5)
+      '@sinclair/typebox':
+        specifier: ^0.31.28
+        version: 0.31.28
+      hono:
+        specifier: ^3.12.5
+        version: 3.12.5
+    devDependencies:
+      '@miniflare/d1':
+        specifier: ^2.14.1
+        version: 2.14.1
+      '@miniflare/shared':
+        specifier: ^2.14.1
+        version: 2.14.1
+      miniflare:
+        specifier: ^3.20231030.4
+        version: 3.20231218.2
 
 packages:
 
@@ -1082,7 +1123,7 @@ packages:
     resolution: {integrity: sha512-M0EUka6rb+QC4l9Z3T0nJEzNOO7JcoJlYMrBlyBCiFSXRyxjLKayd4TbQs2FDRWQU1h9FR7QVNHt+PEaoNL5rQ==}
     engines: {node: '>=0.4.0'}
     dependencies:
-      acorn: 8.11.2
+      acorn: 8.11.3
     dev: true
 
   /acorn-walk@8.3.1:

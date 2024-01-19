@@ -10,11 +10,12 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@PorcoRosso85/core": "workspace:^",
+    "@PorcoRosso85/statemodel": "workspace:^",
     "@testcontainers/postgresql": "^10.4.0",
     "testcontainers": "^10.4.0"
   },
   "dependencies": {
-    "@PorcoRosso85/core": "workspace:^",
     "@types/pg": "^8.10.9",
     "pg": "^8.11.3"
   }

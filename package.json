@@ -9,10 +9,11 @@
   "scripts": {
     "dev": "wrangler dev --live-reload --log-level debug src/index.ts",
     "deploy": "wrangler deploy --minify src/index.ts",
-    "test": "vitest --coverage"
+    "test": "vitest --coverage",
+    "testtype": "vitest typecheck"
   },
   "dependencies": {
-    "@PorcoRosso85/app": "workspace:^"
+    "@PorcoRosso85/web": "workspace:^"
   },
   "devDependencies": {
     "@biomejs/biome": "1.4.1",
