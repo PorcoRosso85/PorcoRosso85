@@ -4,7 +4,7 @@ import { Miniflare } from 'miniflare'
 import { afterAll, beforeAll, describe, expect, test } from 'vitest'
 import { UnstableDevWorker, unstable_dev } from 'wrangler'
 import { feats } from '../../route/states'
-import { states } from '../structure/states'
+import { states } from '../../../infrastructure/config/constants/states'
 
 export { TestFunctionItems, TestFunction, TestMap, TestTypeStates } from './test'
 export { LogLevelConst, LogEntry, LogLevel, logger } from './logger'
