@@ -3,7 +3,7 @@ import { createMachine } from 'xstate'
 
 export { GetType, PostType, DeleteType, PutType, Ends }
 
-import { states } from '../structure/states'
+import { states } from '../../../infrastructure/config/constants/states'
 import { Types } from '../v2'
 import { Query, QueryOperationType, TableFromTypeBox } from '../v2/util'
 

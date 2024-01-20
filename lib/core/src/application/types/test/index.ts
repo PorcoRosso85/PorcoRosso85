@@ -5,7 +5,7 @@
  * interface FeatureTest {}
  * interface
  */
-import { Test, TestComponent } from '../structure'
+import { Test, TestComponent } from '../../../infrastructure/config/constants'
 import { Features } from '../feature'
 
 type TestFunction = Test

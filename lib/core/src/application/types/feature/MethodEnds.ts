@@ -1,5 +1,5 @@
 import { Context } from 'hono'
-import { states } from '../structure/states'
+import { states } from '../../../infrastructure/config/constants/states'
 
 type AnyMethodEnd = {
   end: string
