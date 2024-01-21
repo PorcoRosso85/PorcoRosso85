@@ -3,7 +3,7 @@ import { Context, Hono, Next } from 'hono'
 import { cors } from 'hono/cors'
 import { jwt } from 'hono/jwt'
 import { logger } from 'hono/logger'
-import { genJwt } from './middleware/jwt'
+import { genJwt } from '../../../auth/src/middleware/jwt'
 
 const endpoints = {
   root: '/auth',

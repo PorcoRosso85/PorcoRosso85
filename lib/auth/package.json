@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@PorcoRosso85/core": "workspace:^",
+    "hono": "^3.12.5"
+  }
 }

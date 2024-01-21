@@ -71,13 +71,17 @@ importers:
         specifier: ^3.20231030.4
         version: 3.20231218.2
 
-  lib/auth: {}
+  lib/auth:
+    dependencies:
+      '@PorcoRosso85/core':
+        specifier: workspace:^
+        version: link:../core
+      hono:
+        specifier: ^3.12.5
+        version: 3.12.5
 
   lib/core:
     devDependencies:
-      '@PorcoRosso85/statemodel':
-        specifier: workspace:^
-        version: link:../statemodel
       hono:
         specifier: ^3.12.5
         version: 3.12.5
