@@ -11,5 +11,8 @@
  * ./types/structure/ に定義することから始めます。
  */
 
-export { Features as TFeatures, MethodEnds as TMethodEnds } from './types/feature'
+export {
+  Features as TFeatures,
+  MethodEnds as TMethodEnds,
+} from '@PorcoRosso85/infrastructure/src/config/constants/feature'
 export * as TTest from './types/test'

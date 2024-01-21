@@ -71,6 +71,15 @@ importers:
         specifier: ^3.20231030.4
         version: 3.20231218.2
 
+  lib/application:
+    dependencies:
+      '@PorcoRosso85/infrastructure':
+        specifier: workspace:^
+        version: link:../infrastructure
+      '@PorcoRosso85/statemodel':
+        specifier: workspace:^
+        version: link:../statemodel
+
   lib/auth:
     dependencies:
       '@PorcoRosso85/core':
@@ -81,10 +90,16 @@ importers:
         version: 3.12.5
 
   lib/core:
+    dependencies:
+      '@PorcoRosso85/infrastructure':
+        specifier: workspace:^
+        version: link:../infrastructure
     devDependencies:
       hono:
         specifier: ^3.12.5
         version: 3.12.5
+
+  lib/infrastructure: {}
 
   lib/postgres:
     dependencies:

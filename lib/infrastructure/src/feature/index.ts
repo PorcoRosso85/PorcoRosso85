@@ -1,4 +1,8 @@
-import { Feature, states } from '../../../infrastructure/config/constants'
+/**
+ * このディレクトリは
+ *
+ */
+import { Feature, states } from '../design'
 
 type ExtractPaths<S> = S extends { states: infer States }
   ? {

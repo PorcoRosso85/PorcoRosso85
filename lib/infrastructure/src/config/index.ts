@@ -1,15 +1,37 @@
 /**
  * このディレクトリは、アプリケーションの設定を管理するためのディレクトリです。
  */
-
-import { Design } from './constants'
+export {} from '.'
 
 /**
  * この型で
  * このディレクトリで出力するインターフェースを管理します。
  *
  */
-export interface Config {}
+export interface Config {
+  bindings: Bindings
+  database: {}
+  env: Env
+  constants: Constants
+  auth: {}
+}
+
+export type Bindings = {
+  D1DB: D1Database
+}
+
+export const config: Config = {
+  //   url: 'file:local.db',
+  database: {
+    url: ':memory:',
+  },
+
+  // auth
+  auth: {
+    MAX_LOGIN_ATTEMPTS: 5,
+    LOCK_TIME: 2 * 60 * 60 * 1000, // 2 hours, lock time is for duration of lock to login
+  },
+}
 
 // 環境変数の読み込み
 // cloufflare workers からの環境変数の読み込み
@@ -43,9 +65,7 @@ export interface Env {
  * この型で
  * アプリケーション内で使用する定数を管理します。
  */
-export interface Constants {
-  design: Design
-}
+import { Error } from './error'
 
 export const env: Env = {
   JWT_SECRET: 'jwt_secret_for_roccho',

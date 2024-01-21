@@ -9,7 +9,7 @@ import { DurableObjectsOptionsSchema, Miniflare } from 'miniflare'
 import { Test, afterAll, beforeAll, describe, expect, expectTypeOf, test } from 'vitest'
 import { UnstableDevWorker, unstable_dev } from 'wrangler'
 import { features } from '@PorcoRosso85/app/src/route/route'
-import { browserWorkerConn } from '../io/appIo.test'
+import { browserWorkerConn } from '../io/index.test'
 import { TestFactory, TestFunction, TestFunctionImplement, TestMap, TestMapImplement } from '.'
 
 /**

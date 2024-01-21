@@ -1,50 +1,49 @@
-import { createMachine } from 'xstate'
+/**
+ * このディレクトリは
+ * テスト関数を実装する
+ *
+ * @example
+ * interface FeatureTest {}
+ * interface
+ */
+import { Test, TestComponent, Features } from '@PorcoRosso85/infrastructure'
 
-export { TestFunctionItems, TestFunction, TestMap, TestTypeStates }
-import { Ends } from './feats'
-import { Query, QueryOperationType, TableFromTypeBox } from '../util'
+type TestFunction = Test
+export { TestComponent, TestFunction }
 
-const testTypeStates = {
-  TestMap: {
-    on: {
-      key: 'TestFunction',
-    },
-  },
-  TestFunction: {
-    on: {
-      type: 'Query',
-    },
-  },
-  Query: {},
-  void: {
-    on: {
-      'testFactory()': 'TestMap',
-    },
-  },
+/**
+ * テスト関数の実装一覧を格納するオブジェクトを定義する
+ */
+export type TestFunctionImplement = {
+  [key in string]: TestFunction
 }
 
-export const testTypeStateMachine = createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QDcCWYDusAEBDAdhNmADZgC2Y+ALrAHQAqc1AsrgA4DEA1mAJ4BtAAwBdRKHYB7WKmqpJ+cSAAeiACxqhdAIzaATAFZtAZiHaDADgBsV42oA0IPogva6ATleG9QvVYsGBu5WAL4hjmiYOAREpBRUtIzMAGIArvgAxnIKnNR87GDCYkggUjLZiiWqCFYA7BZ0etoWtQb+7mq1dbWOzgiuHl4GPn4BQaHhIJFYeITEZJQ09MiSqBC5KbhZkgBOfAAUAJRFSmWy8pWg1dpWenTGLQa+niNCDk4ubp76w77+gcEwpN8JIIHAlNNonM4otaKdpOcFEpqgBaKy9RBosIRdAzGLzeJLJKwVgceHlC7IxDGbTuOi1QxmIRCYwPNRBYwY-puOpPXxqJraTT+bFTXFQ2ILBL0JgktKZCrkxGXFSIYZ0tS3J56CzGWr61pcga85l6AW6YUWUWQ2aSwmJACKqTAeyViqqiH1dxuhl07n5RncRp5rVN5qFQhFkxt+Jh0roKzWbspHoQAuDdBN-MFlqBISAA */
-  id: 'views and elements',
-  tsTypes: {} as import('./test.typegen').Typegen0,
-  schema: {
-    // context: {} as { contextType },
-    events: {} as { type: 'eventType' },
-  },
-  context: {
-    // initialContextValue,
-  },
-  initial: 'void',
-  states: testTypeStates,
-})
-
-type TestTypeStates = {
-  [Return in keyof typeof testTypeStates]: {
-    [On in keyof (typeof testTypeStates)[Return]]: {
-      [Declare in keyof (typeof testTypeStates)[Return][On]]: any
-    }
-  }
+/**
+ * テストマップ実装は
+ * 各機能ごとに必要なテストを網羅する
+ * オブジェクトの型を定義する
+ *
+ */
+export type TestMapImplement = {
+  // このkeyは、Types.Featuresのkeyを表現する文字列
+  // ViewTransitionのkeyを表現する文字列そのままではあるが、Featuresに依存させる
+  [K in keyof Features]: TestComponent[]
 }
+
+/**
+ * テストファクトリーの型を定義する
+ * テストファクトリは、テストマップ実装を受け取り、
+ * テスト関数を返す関数である
+ *
+ * 使用方法
+ * @usage
+ * const testFactory: TestFactory = (testMap: TestMapImplement) => {
+ * ...
+ * }
+ * testFactory(testMap)
+ *
+ */
+export type TestFactory = (testMap: TestMapImplement) => void
 
 type TestFunctionItems =
   // initialDevelopmentPhaseTests
@@ -78,26 +77,6 @@ type TestFunctionItems =
   | 'performanceMonitoring' // パフォーマンスモニタリング
   | 'infrastructureAudit' // 基盤の監査
   | 'complianceTesting' // コンプライアンステスト
-
-type TestFunction = (params: {
-  method: string
-  end: string
-  body?: any
-  match?: string
-  query?: Query
-}) => void | Promise<void>
-
-type TestMatch = 'toContain' | 'toEqual' | 'toMatchObject' | 'toBe' | 'toBeUndefined'
-
-type TestMap = {
-  [MethodEnd in keyof Ends]: {
-    [Item in keyof Ends[MethodEnd]]: {
-      func: TestFunction
-      match: TestMatch
-      params: string[]
-    }[]
-  }
-}
 
 type TestItems = {
   initialDevelopmentPhaseTests: {

@@ -4,7 +4,7 @@
  * 契約を定義するためのディレクトリです。
  */
 
-import { states, DesignAddedDML } from '../../../infrastructure/config/constants'
+import { states } from '@PorcoRosso85/infrastructure'
 import { stateModel } from '@PorcoRosso85/statemodel'
 import path from 'path'
 

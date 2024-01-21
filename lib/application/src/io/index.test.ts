@@ -7,7 +7,7 @@ import { UnstableDevWorker, unstable_dev } from 'wrangler'
 import { features } from '@PorcoRosso85/app/src/route/route'
 import { TestFunction } from '../tests'
 import { Types } from '../types'
-import { CommonColumns, Feature, QueryResult, Table, User, UserColumns } from './appIo'
+import { CommonColumns, Feature, QueryResult, Table, User, UserColumns } from '.'
 
 function getTableName<T extends Table<any>>(table: T): string {
   return table.tableName
