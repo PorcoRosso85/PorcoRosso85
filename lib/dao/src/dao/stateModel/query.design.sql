@@ -2,7 +2,7 @@
 -- /user_account./:user_id./user_info.name: GetUser :one
 -- name: GetUser :one
 -- ユーザー情報を取得するクエリ { users }
-SELECT * FROM users WHERE id = $1;
+SELECT * FROM users WHERE email = $1;
 
 -- ------------------------------END
 

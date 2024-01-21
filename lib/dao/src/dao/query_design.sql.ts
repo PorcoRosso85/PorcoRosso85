@@ -5,22 +5,23 @@ interface Client {
 }
 
 export const getUserQuery = `-- name: GetUser :one
-SELECT id, name, code FROM users WHERE id = $1`;
+SELECT id, name, code, email FROM users WHERE email = $1`;
 
 export interface GetUserArgs {
-    id: number;
+    email: string;
 }
 
 export interface GetUserRow {
     id: number;
     name: string;
     code: string;
+    email: string;
 }
 
 export async function getUser(client: Client, args: GetUserArgs): Promise<GetUserRow | null> {
     const result = await client.query({
         text: getUserQuery,
-        values: [args.id],
+        values: [args.email],
         rowMode: "array"
     });
     if (result.rows.length !== 1) {
@@ -30,7 +31,8 @@ export async function getUser(client: Client, args: GetUserArgs): Promise<GetUse
     return {
         id: row[0],
         name: row[1],
-        code: row[2]
+        code: row[2],
+        email: row[3]
     };
 }
 
