@@ -12,7 +12,9 @@
  */
 
 export {
-  Features as TFeatures,
-  MethodEnds as TMethodEnds,
-} from '@PorcoRosso85/infrastructure/src/config/constants/feature'
-export * as TTest from './types/test'
+  Features,
+  MethodEnds,
+  features,
+} from './feature'
+export * as TTest from './test'
+export { app } from './route'

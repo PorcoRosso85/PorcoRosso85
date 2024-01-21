@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@PorcoRosso85/infrastructure": "workspace:^",
-    "@PorcoRosso85/statemodel": "workspace:^"
+    "@PorcoRosso85/statemodel": "workspace:^",
+    "hono": "^3.12.5"
   }
 }

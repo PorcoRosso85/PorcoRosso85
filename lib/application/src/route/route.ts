@@ -1,12 +1,11 @@
 // import { Bindings } from '@quantic/config'
 import { Context, Env, Hono } from 'hono'
-import { Bindings, TFeatures } from '@PorcoRosso85/core'
-import { features } from '../features'
+import { features, Features } from '@PorcoRosso85/application'
 
 /**
  * featuresを受け取り、appを返す関数
  */
-const createApp = <T extends Env>(app: Hono<T>, features: TFeatures) => {
+const createApp = <T extends Env>(app: Hono<T>, features: Features) => {
   // app.[method](feature.end, feature.handler)
   for (const [path, feature] of Object.entries(features)) {
     const method = feature.method.toLowerCase() as 'get' | 'post' | 'put' | 'delete'

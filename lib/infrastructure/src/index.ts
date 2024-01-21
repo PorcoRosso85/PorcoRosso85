@@ -1,8 +1,7 @@
 /**
  * このディレクトリは、インフラストラクチャ層のエントリーポイントです。
  */
-export { Design, Feature, Test, states, TestComponent, TestTypes } from './design'
-export { Features, MethodEnds, Events } from './feature'
+export { Design, states } from './design'
 export { Config, Env } from './config'
 
 export interface Infrastructure {
@@ -11,11 +10,6 @@ export interface Infrastructure {
     Feature: Feature
     Test: Test
     states: typeof states
-  }
-  feature: {
-    Features: Features
-    MethodEnds: MethodEnds
-    Events: Events
   }
   config: {
     Constants: Constants

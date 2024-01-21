@@ -7,8 +7,8 @@ import { Value } from '@sinclair/typebox/value'
 import { Context, Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
-import * as schema from '../dao/schema'
-import { T } from '../dao/schema'
+import * as schema from '@PorcoRosso85/web/src/dao/schema'
+import { T } from '@PorcoRosso85/web/src/dao/schema'
 import { errors } from '../../../core/src/error'
 
 type BaseType = {

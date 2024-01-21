@@ -6,10 +6,36 @@
  * interface FeatureTest {}
  * interface
  */
-import { Test, TestComponent, Features } from '@PorcoRosso85/infrastructure'
+import { Features } from '../feature'
+
+/**
+ * テスト関数の契約を定義する
+ * この契約は、このプロジェクトのすべてのテスト関数が満たすべきものです。
+ */
+export interface Test {
+  (params: {
+    method: string
+    end: string
+    body?: string
+    query?: string | string[]
+    context: {
+      type: string
+      params: string[]
+    }
+  }): void
+}
+
+export interface TestComponent {
+  testFunction: Test
+  testTarget: any
+  textContexts: {
+    type: TestTypes
+    params: string[]
+  }[]
+}
+export type TestTypes = 'toBe' | 'toEqual' | 'toMatchObject' | 'toContain' | 'toContainEqual'
 
 type TestFunction = Test
-export { TestComponent, TestFunction }
 
 /**
  * テスト関数の実装一覧を格納するオブジェクトを定義する
