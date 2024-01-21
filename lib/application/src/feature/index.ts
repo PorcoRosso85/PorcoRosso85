@@ -3,6 +3,7 @@
  *
  */
 import { states } from '@PorcoRosso85/infrastructure'
+import { Context } from 'hono'
 
 /**
  * この型は、Web機能を表現する型です。
@@ -21,10 +22,14 @@ export interface Feature {
       [elementName: string]: any
     }
   }
-  handler?: (c: Context) => any | Promise<any>
+  handler?: Handler
 }
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+export interface Handler {
+  (c: Context): any | Promise<any>
+}
+
+export type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch'
 
 type Endpoint = string
 //
@@ -56,9 +61,17 @@ export type Events = (typeof states)['types']['events'] extends { type: infer T 
 
 export const features: Features = {
   '/': {
+    method: 'get',
     end: '/',
     error: '',
     query: {},
     handler: async (c) => c.html('Hello World'),
+  },
+  '/user': {
+    method: 'get',
+    end: '/user',
+    error: '',
+    query: {},
+    handler: async (c) => c.html('Hello User'),
   },
 }
