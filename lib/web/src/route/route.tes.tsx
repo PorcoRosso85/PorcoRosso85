@@ -2,7 +2,7 @@ import { jwt, verify } from 'hono/jwt'
 import { afterAll, beforeAll, describe, expect, test } from 'vitest'
 import { unstable_dev } from 'wrangler'
 import type { UnstableDevWorker } from 'wrangler'
-import { genJwt } from './middleware/jwt'
+import { genJwt } from '../../../auth/src/jwt'
 import { authHonoApp } from './route'
 
 describe.skip('Env var from Worker', (c) => {

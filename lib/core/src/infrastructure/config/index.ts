@@ -46,3 +46,18 @@ export interface Env {
 export interface Constants {
   design: Design
 }
+
+export const env: Env = {
+  JWT_SECRET: 'jwt_secret_for_roccho',
+}
+
+if (import.meta.vitest) {
+  const { describe, expect, test } = await import('vitest')
+
+  describe('Env', () => {
+    test('jws secret key', () => {
+      // [] unstable_devを使って環境変数を.dev.varsから取得
+      // unstable_devを使うと、import.meta.envがundefinedになる
+    })
+  })
+}
