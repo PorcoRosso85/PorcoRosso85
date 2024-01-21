@@ -48,12 +48,13 @@ importers:
       '@PorcoRosso85/infrastructure':
         specifier: workspace:^
         version: link:../infrastructure
-      '@PorcoRosso85/statemodel':
-        specifier: workspace:^
-        version: link:../statemodel
       hono:
         specifier: ^3.12.5
         version: 3.12.5
+    devDependencies:
+      '@PorcoRosso85/statemodel':
+        specifier: workspace:^
+        version: link:../statemodel
 
   lib/auth:
     dependencies:
@@ -74,7 +75,11 @@ importers:
         specifier: ^3.12.5
         version: 3.12.5
 
-  lib/infrastructure: {}
+  lib/infrastructure:
+    dependencies:
+      xstate:
+        specifier: ^5.5.1
+        version: 5.5.1
 
   lib/postgres:
     dependencies:
@@ -3042,6 +3047,10 @@ packages:
       utf-8-validate:
         optional: true
     dev: true
+
+  /xstate@5.5.1:
+    resolution: {integrity: sha512-12Was43pPJKg3JWoelOREtTNYgFz6tRlNrMaRuqOibEe3pn8/uOWiP8ySMfOynyIjHUxd4BU7wV9O54Ma3FM6g==}
+    dev: false
 
   /xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
