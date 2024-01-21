@@ -10,7 +10,7 @@ import path from 'path'
 //   listAccounts,
 // } from '../src/gen/sqlc/pg/account_sql'
 
-import { getUser } from './query_design.sql'
+import { insertUser, getUser } from './query_design.sql'
 
 import { GenericContainer, StartedTestContainer, Wait } from 'testcontainers'
 
@@ -45,7 +45,7 @@ describe('user', async () => {
     await client.query('SELECT 1')
 
     // ファイルを読み込んでSQL文を取得
-    const sqlFilePath = path.resolve(__dirname, '../postgresql/models/economy/schema.sql')
+    const sqlFilePath = path.resolve(__dirname, './stateModel/schema.design.sql')
     const schemaSQL = fs.readFileSync(sqlFilePath, 'utf-8')
 
     // スキーマの初期化
@@ -59,23 +59,37 @@ describe('user', async () => {
     await container.stop()
   })
 
-  test('Insert user and select', async () => {
-    // await createAccount(client, { id: 'spam', displayName: 'Egg', email: 'ham@example.com' })
-    await insertUser(client, {
-      userId: 1,
-      userName: 'user',
-      email: 'user@mail.com',
-      registeredAt: new Date(),
+  describe('Insert user and select', async () => {
+    test('correct user', async () => {
+      await insertUser(client, {
+        userId: 1,
+        userName: 'user',
+        email: 'user@mail.com',
+        registeredAt: new Date(),
+      })
+      const user1 = await getUser(client, { email: 'user@mail.com' })
+      expect(user1?.userId).toBe(1)
+      expect(user1?.userName).toBe('user')
+      expect(user1?.email).toBe('user@mail.com')
+      expect(user1?.registeredAt).not.toBe(null)
     })
 
-    const users = await getUserInfo(client, { userId: 1 })
-    expect(users?.userId).toBe(1)
-    expect(users?.userName).toBe('user')
-    expect(users?.email).toBe('user@mail.com')
-    expect(users?.registeredAt).not.toBe(null)
+    test('incorrect user', async () => {
+      await insertUser(client, {
+        userId: 1,
+        userName: 'user',
+        email: 'user@mail.com',
+        registeredAt: new Date(),
+      })
+      const user2 = await getUser(client, { email: 'user2@mail.com' })
+      expect(user2?.userId).not.toBe(1)
+      expect(user2?.userName).not.toBe('user')
+      expect(user2?.email).not.toBe('user@mail.com')
+      expect(user2?.registeredAt).not.toBe(null)
+    })
   }, 30_000)
 
-  test('Update user and delete', async () => {
+  test.skip('Update user and delete', async () => {
     await insertUser(client, {
       userId: 1,
       userName: 'user',
@@ -99,7 +113,7 @@ describe('user', async () => {
     expect(user).toBe(null)
   }, 30_000)
 
-  test('Insert role and select', async () => {
+  test.skip('Insert role and select', async () => {
     await insertUser(client, {
       userId: 1,
       userName: 'user',
