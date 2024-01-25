@@ -11,6 +11,8 @@
   "license": "MIT",
   "dependencies": {
     "@PorcoRosso85/infrastructure": "workspace:^",
+    "@xstate/test": "^0.5.1",
+    "ts-pattern": "^5.0.6",
     "xstate": "^5.5.1"
   },
   "devDependencies": {

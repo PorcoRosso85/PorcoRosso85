@@ -1,7 +1,7 @@
 /**
  * このディレクトリは、インフラストラクチャ層のエントリーポイントです。
  */
-export { Design, states } from './design'
+export { Design, states, authLoginStates, authLoginMachine } from './design'
 export { Config, Env } from './config'
 
 export interface Infrastructure {

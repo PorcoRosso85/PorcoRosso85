@@ -24,6 +24,8 @@ const countMachine = createMachine({
   },
 })
 
+export { countMachine }
+
 describe('count', () => {
   test('should increment', async () => {
     const countActor = createActor(countMachine).start()

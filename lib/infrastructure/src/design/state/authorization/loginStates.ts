@@ -1,116 +1,162 @@
-export const authLoginStates = {
-  id: '/auth/login',
-  initial: 'verifyJwt',
-  states: {
-    '401': {
-      exit: {
-        type: 'Result',
+import { createMachine, fromTransition, fromPromise } from 'xstate'
+
+export const machine = createMachine(
+  {
+    id: '/auth/login',
+    initial: 'verifyJwt',
+    states: {
+      '401': {
+        exit: {
+          type: 'Result',
+        },
+        type: 'final',
       },
-      type: 'final',
-    },
-    verifyJwt: {
-      invoke: {
-        input: {},
-        src: 'verifyJwt',
-        onDone: [
-          {
-            target: 'hasLogined',
-          },
-        ],
-        onError: [
-          {
-            target: 'getUser',
-          },
-        ],
+      '500': {
+        entry: {
+          type: 'Result',
+        },
+        type: 'final',
       },
-    },
-    hasLogined: {
-      exit: {
-        type: 'Result',
+      verifyJwt: {
+        invoke: {
+          input: {},
+          src: 'verifyJwt',
+          onDone: [
+            {
+              target: 'hasLogined',
+            },
+          ],
+          onError: [
+            {
+              target: '-- name: GetUser :one',
+            },
+          ],
+        },
       },
-      type: 'final',
-    },
-    getUser: {
-      invoke: {
-        input: {},
-        src: 'getUser',
-        onDone: [
-          {
-            target: 'isUser',
-          },
-        ],
-        onError: [
-          {
-            target: 'isNotUser',
-          },
-        ],
+      hasLogined: {
+        invoke: {
+          input: {},
+          src: 'createSession',
+        },
       },
-    },
-    isUser: {
-      always: {
-        target: 'signJwt',
+      '-- name: GetUser :one': {
+        invoke: {
+          input: {},
+          src: 'getUser',
+        },
       },
-    },
-    isNotUser: {
-      always: {
-        target: '401',
+      isSession: {
+        entry: {
+          type: 'Result',
+        },
+        type: 'final',
       },
-    },
-    signJwt: {
-      invoke: {
-        input: {},
-        src: 'signJwt',
-        onDone: [
-          {
-            target: 'sendJwtToClient',
-          },
-        ],
-        onError: [
-          {
-            target: 'isNotAuthenticated',
-          },
-        ],
+      checkIsUserOrNot: {
+        invoke: {
+          input: {},
+          src: 'checkIsUserOrNot',
+          onDone: [
+            {
+              target: 'isUser',
+            },
+          ],
+          onError: [
+            {
+              target: 'isNotUser',
+            },
+          ],
+        },
       },
-    },
-    sendJwtToClient: {
-      invoke: {
-        input: {},
-        src: 'sentJwtToClient',
-        onDone: [
-          {
-            target: 'hasLogined',
-          },
-        ],
-        onError: [
-          {
-            target: 'isNotAuthenticated',
-          },
-        ],
+      isUser: {
+        always: {
+          target: 'signJwt',
+        },
       },
-      on: {
-        result: {
-          target: 'hasLogined',
-          actions: {
-            type: 'Result',
-          },
+      isNotUser: {
+        always: {
+          target: '401',
+        },
+      },
+      signJwt: {
+        invoke: {
+          input: {},
+          src: 'signJwt',
+          onDone: [
+            {
+              target: 'sendJwtToClient',
+            },
+          ],
+          onError: [
+            {
+              target: 'isNotAuthenticated',
+            },
+          ],
+        },
+      },
+      sendJwtToClient: {
+        invoke: {
+          input: {},
+          src: 'sentJwtToClient',
+          onDone: [
+            {
+              target: 'hasLogined',
+            },
+          ],
+          onError: [
+            {
+              target: 'isNotAuthenticated',
+            },
+          ],
+        },
+      },
+      isNotAuthenticated: {
+        always: {
+          target: '401',
         },
       },
     },
-    isNotAuthenticated: {
-      always: {
-        target: '401',
+    on: {
+      loginRequest: {
+        target: '.verifyJwt',
       },
-      on: {
-        loginRequest: {
-          target: 'getUser',
+    },
+    types: { events: {} as { type: 'loginRequest' } | { type: '' } },
+  },
+  {
+    actions: {
+      Result: ({ context, event }) => {},
+    },
+    actors: {
+      getUser: fromPromise({
+        /* ... */
+      }),
+      sentJwtToClient: fromPromise({
+        /* ... */
+      }),
+      verifyJwt: fromPromise({
+        /* ... */
+      }),
+      checkIsUserOrNot: fromTransition(
+        (state, event) => {
+          switch (event.type) {
+            case 'increment': {
+              return { count: state.count + 1 }
+            }
+            default: {
+              return state
+            }
+          }
         },
-      },
+        { count: 0 },
+      ),
+      signJwt: fromPromise(async () => {
+        // ...
+      }),
+      createSession: fromPromise({
+        /* ... */
+      }),
     },
+    guards: {},
+    delays: {},
   },
-  on: {
-    loginRequest: {
-      target: '.verifyJwt',
-    },
-  },
-  types: { events: {} as { type: 'loginRequest' } | { type: 'result' } },
-}
+)
