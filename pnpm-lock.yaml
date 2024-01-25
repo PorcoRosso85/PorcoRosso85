@@ -51,10 +51,6 @@ importers:
       hono:
         specifier: ^3.12.5
         version: 3.12.5
-    devDependencies:
-      '@PorcoRosso85/statemodel':
-        specifier: workspace:^
-        version: link:../statemodel
 
   lib/auth:
     dependencies:
@@ -75,11 +71,43 @@ importers:
         specifier: ^3.12.5
         version: 3.12.5
 
+  lib/dao:
+    dependencies:
+      '@PorcoRosso85/core':
+        specifier: workspace:^
+        version: link:../core
+      '@PorcoRosso85/infrastructure':
+        specifier: workspace:^
+        version: link:../infrastructure
+      '@types/pg':
+        specifier: ^8.10.9
+        version: 8.10.9
+      pg:
+        specifier: ^8.11.3
+        version: 8.11.3
+    devDependencies:
+      '@PorcoRosso85/statemodel':
+        specifier: workspace:^
+        version: link:../statemodel
+      '@testcontainers/postgresql':
+        specifier: ^10.4.0
+        version: 10.6.0
+      testcontainers:
+        specifier: ^10.4.0
+        version: 10.6.0
+
   lib/infrastructure:
     dependencies:
+      '@PorcoRosso85/infrastructure':
+        specifier: workspace:^
+        version: 'link:'
       xstate:
         specifier: ^5.5.1
         version: 5.5.1
+    devDependencies:
+      '@PorcoRosso85/statemodel':
+        specifier: workspace:^
+        version: link:../statemodel
 
   lib/postgres:
     dependencies:
