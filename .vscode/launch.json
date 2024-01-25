@@ -85,6 +85,35 @@
       "outputCapture": "std"
     },
     {
+      "name": "tsc --noEmit $file",
+      "type": "node",
+      "request": "launch",
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
+      "runtimeExecutable": "/home/user/pjs/node/.devbox/nix/profile/default/bin/pnpm",
+      "runtimeArgs": ["tsc","--noEmit", "${file}"],
+      "skipFiles": ["<node_internals>/**"],
+      "internalConsoleOptions": "neverOpen",
+      "console": "integratedTerminal",
+      "outputCapture": "std"
+    },{
+      "name": "tsx $file",
+      "type": "node",
+      "request": "launch",
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
+      "runtimeExecutable": "/home/user/pjs/node/.devbox/nix/profile/default/bin/pnpm",
+      "runtimeArgs": ["tsx", "${file}"],
+      "skipFiles": ["<node_internals>/**"],
+      "internalConsoleOptions": "neverOpen",
+      "console": "integratedTerminal",
+      "outputCapture": "std"
+    },
+    {
       "name": "vitest --typecheck $file",
       "type": "node",
       "request": "launch",
