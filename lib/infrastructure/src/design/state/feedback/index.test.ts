@@ -2,7 +2,7 @@
  * countアクターからのメッセージを受け取る
  */
 import { assign, createActor, createMachine } from 'xstate'
-import { countMachine } from '../count/index.test'
+import { countMachine } from '../count/2.test'
 import { returnHelloMachine } from './hello'
 import { describe, test, expect } from 'vitest'
 
@@ -12,6 +12,7 @@ const feedbackMachine = createMachine(
     context: {
       count: 0,
       greeting: '',
+      countChild: 0,
     },
     id: 'feedback',
     initial: 'idle',
@@ -71,16 +72,16 @@ const feedbackMachine = createMachine(
     },
     types: {
       events: {} as { type: 'RETRY' | 'HELLO' | 'COUNT' },
-      context: {} as { count: number; greeting: string },
+      context: {} as { count: number; greeting: string; countChild: number },
     },
   },
   {
     actions: {
-      hello: assign({
-        greeting: () => 'hello',
-      }),
-      updateCountFromCountMachine: assign({
-        // count: ({ event }) => event.data.context.count,
+      hello: assign({ greeting: () => 'hello' }),
+      updateCountFromCountMachine: assign(({ context, event }) => {
+        console.debug('### updateCountFromCountMachine.event.snapshot')
+        console.debug(event.snapshot.context.count)
+        context.countChild = event.snapshot.context.count
       }),
     },
     actors: {
@@ -128,9 +129,10 @@ describe('feedbackMachine', () => {
     console.debug(actor.getSnapshot())
     // returnHelloがfinalまで無事に到達したのでonDoneが発火する
     expect(actor.getSnapshot().value).toBe('getCount')
+    // feedbackMachineのcontext.count
     expect(actor.getSnapshot().context.count).toBe(0)
-    // countMachineのcontext.countを取得したい
-
+    // [] countMachineのcontext.countを取得したい
+    expect(actor.getSnapshot().context.countChild).toBe(10)
     expect(actor.getSnapshot().status).toBe('active')
   })
 })
