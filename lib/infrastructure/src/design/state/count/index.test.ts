@@ -25,23 +25,23 @@ const countMachine = createMachine(
   // })
   {
     context: {
-      count: 0,
+      count: 1,
     },
     id: 'countMachine',
     on: {
       INC: {
         actions: {
-          type: 'inline:(machine)#INC[-1]#transition[0]',
+          type: 'increment',
         },
       },
       DEC: {
         actions: {
-          type: 'inline:(machine)#DEC[-1]#transition[0]',
+          type: 'decrement',
         },
       },
       SET: {
         actions: {
-          type: 'inline:(machine)#SET[-1]#transition[0]',
+          type: 'set',
         },
       },
     },
@@ -52,13 +52,13 @@ const countMachine = createMachine(
   },
   {
     actions: {
-      'inline:(machine)#INC[-1]#transition[0]': assign({
+      increment: assign({
         count: ({ context }) => context.count + 1,
       }),
-      'inline:(machine)#DEC[-1]#transition[0]': assign({
+      decrement: assign({
         count: ({ context }) => context.count - 1,
       }),
-      'inline:(machine)#SET[-1]#transition[0]': assign({
+      set: assign({
         count: ({ event }) => event.value,
       }),
     },
@@ -80,7 +80,7 @@ describe('count', () => {
     await new Promise<void>((resolve) => {
       countActor.subscribe((state) => {
         console.debug(state.context.count)
-        expect(state.context.count).toBe(1)
+        expect(state.context.count).toBe(2)
         resolve()
       })
     })
@@ -89,14 +89,14 @@ describe('count', () => {
   test('should increment, then gotten with snapshot', async () => {
     const countActor = createActor(countMachine).start()
     // console.debug(countActor.getSnapshot())
-    expect(countActor.getSnapshot().context.count).toBe(0)
+    expect(countActor.getSnapshot().context.count).toBe(1)
   })
 
   test('should increment, then gotten with snapshot', async () => {
     const countActor = createActor(countMachine).start()
     countActor.send({ type: 'INC' })
     console.debug(countActor.getSnapshot())
-    expect(countActor.getSnapshot().context.count).toBe(1)
+    expect(countActor.getSnapshot().context.count).toBe(2)
   })
 
   test('should decrement', async () => {
@@ -107,7 +107,7 @@ describe('count', () => {
 
     await new Promise<void>((resolve) => {
       countActor.subscribe((state) => {
-        expect(state.context.count).toBe(-1)
+        expect(state.context.count).toBe(0)
         resolve()
       })
     })
