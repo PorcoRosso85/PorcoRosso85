@@ -3,59 +3,39 @@
  */
 import { assign, createActor, createMachine } from 'xstate'
 import { countMachine } from '../count/index.test'
+import { returnHelloMachine } from './hello'
 import { describe, test, expect } from 'vitest'
-
-const returnHelloMachine = createMachine(
-  {
-    /** @xstate-layout N4IgpgJg5mDOIC5QCcwBcCuyB2AJMANgQPYB0AFoSQMQDaADALqKgAOxsAlmp8diyAAeiAIwA2AEykAzAA4A7ABYAnAFZpqiZLH0JAGhABPRLMWl50pauUjpt+fIC+zg9mIQ4A1Jhz4ixAXYuHj4BYQQAWjEDY0ixFxBvLDwqMkp-QI5uXn4kIURFfSMTKWUJEVlpaV1LCydHAyTfVNIAd2JkAghM4JywxAlVVVJZCRVZMTENRUUxMpiTEVIxJTUbWVl6ehFFEWdnIA */
-    id: 'returnHello',
-    initial: 'hello',
-    states: {
-      hello: {
-        always: {
-          target: 'world',
-        },
-      },
-      world: {
-        type: 'final',
-      },
-    },
-    types: {},
-  },
-  {
-    actions: {},
-    actors: {},
-    guards: {},
-    delays: {},
-  },
-)
 
 const feedbackMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QDMyQEYEMDGBrAdDAC4DKRmRArrAMQQD2AdmPgJaMBu9uLxZF1ANoAGALqJQAB3qxWRVkwkgAHogDMADgCM+AEwBONQHYNGgCzCArGctHdAGhABPRNvwA2I2f3uNa4WZaavomAL6hjqgYOAR85FS0YABOSfRJ+JIANhTIaQC2hGCk8UJiStKy8opIKupuBsamFta2Ds6Iusb4ltpBZjYaRkaWQeGRaBBYePjImKyZlElgNABKAKIAKisAmiLiNRVyCoxKqgiewh7C7p1a+mZGwoOOLghapvhG7+76+rYalhuPnCERAjHoEDgSiikxi5RkR2qoDOAFp3C9EGj8MIcbi8XijGMQDCprEivwEvDKsdTogzG1XlphPpumozGo1FpdBYgl59ESSTF8LBKNhsHB4AcEVUTjUziZLu53vo7sJOsImUYMW8mfgbIY1DduQZvAKJqSZnMFksqYjZcjEAqPMrVerNdq7u49SqepZdMI7PoNAEQaEgA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QDMyQEYEMDGBrAdAJYQA2YAxAMoAqAggErUDaADALqKgAOA9rIQBdCPAHacQAD0QBGAGwB2fAGYAHPIAsKgKyzd0liukAaEAE8Z82csMAmG+q0rD6luvkBfdydQYcBGAIAEmAkJDzkEKJgRCIAbjy40QHBoTysHEggvPxCouJSCLLq0vjqsvYAnBVaWjauNsZmMiws+BU2hixKNjVF8jae3mgQWHj4ySFh5GAATjM8M-hcJJgCyAsAtuNgQZNp7OLZgsJimQVyiqoa2rqy+oYm5giG+ArqFYaWSmV3FYMgPhGfnwyEwhBIAFcZhR6ABRaj0ACa6UOfGOeTOMgU1muOj0BkaT2kNkUWmkankWiU8g+Sjk0k8XhAIh4EDg4kBo1wqJyJ3yiAAtLJHoLZP9OcDiGQeejTqACuobCKENJLPgWJSWq47rIarVxcMudtdqkZbk5ZJEN0tKUNBVZFU7nZ7Mr9FZiVoWhU3T0imKmRKxrAIdhsHB4Jkjub+SrXK15GotA46QYKuolK6bBV8PJie9ajrcyoDb4xqDwVCwGa+ZiEIrldpSqok3UKiw3SwtIz3EA */
     context: {
       count: 0,
+      greeting: '',
     },
     id: 'feedback',
     initial: 'idle',
     states: {
       idle: {
         on: {
-          START: {
-            target: 'getStatus',
+          HELLO: {
+            target: 'getHello',
+          },
+          COUNT: {
+            target: 'getCount',
           },
         },
       },
-      getStatus: {
+      getHello: {
         invoke: {
           input: {},
           src: 'returnHelloMachine',
-          id: 'getStatus',
+          id: 'getHello',
           onDone: [
             {
               target: 'success',
               actions: {
-                type: 'inline:feedback.getStatus#done.invoke.getStatus[-1]#transition[0]',
+                type: 'hello',
               },
             },
           ],
@@ -67,27 +47,45 @@ const feedbackMachine = createMachine(
         },
       },
       success: {},
+      getCount: {
+        invoke: {
+          src: 'countMachine',
+          id: 'count',
+          onSnapshot: {
+            actions: {
+              type: 'updateCountFromCountMachine',
+            },
+          },
+          onDone: {
+            target: 'success',
+          },
+        },
+      },
       failure: {
         on: {
           RETRY: {
-            target: 'getStatus',
+            target: 'getHello',
           },
         },
       },
     },
     types: {
-      events: {} as { type: 'RETRY' | 'START' },
-      context: {} as { count: number },
+      events: {} as { type: 'RETRY' | 'HELLO' | 'COUNT' },
+      context: {} as { count: number; greeting: string },
     },
   },
   {
     actions: {
-      'inline:feedback.getStatus#done.invoke.getStatus[-1]#transition[0]': assign({
-        count: ({ event }) => event.output,
+      hello: assign({
+        greeting: () => 'hello',
+      }),
+      updateCountFromCountMachine: assign({
+        // count: ({ event }) => event.data.context.count,
       }),
     },
     actors: {
       returnHelloMachine: returnHelloMachine,
+      countMachine: countMachine,
     },
     guards: {},
     delays: {},
@@ -95,20 +93,44 @@ const feedbackMachine = createMachine(
 )
 
 describe('feedbackMachine', () => {
-  test('初期状態はgetStatus', () => {
+  test('初期状態はgetHello', () => {
     const actor = createActor(feedbackMachine).start()
+    // console.debug("inital state actor.getSnapshot()")
     // console.debug(actor.getSnapshot())
     expect(actor.getSnapshot().value).toBe('idle')
     expect(actor.getSnapshot().status).toBe('active')
   })
 
-  // returnHelloMachineからのメッセージを受け取ったテストをしたい
   test('returnHelloMachineがonDoneを返したらsuccessに遷移する', () => {
     const actor = createActor(feedbackMachine).start()
-    actor.send({ type: 'START' })
-    console.debug(actor.getSnapshot())
+    actor.send({ type: 'HELLO' })
+    // console.debug("hello event actor.getSnapshot()")
+    // console.debug(actor.getSnapshot())
     // returnHelloがfinalまで無事に到達したのでonDoneが発火する
     expect(actor.getSnapshot().value).toBe('success')
+    expect(actor.getSnapshot().status).toBe('active')
+  })
+
+  test('contextがhelloになっている', () => {
+    const actor = createActor(feedbackMachine).start()
+    actor.send({ type: 'HELLO' })
+    // console.debug("hello event actor.getSnapshot()")
+    // console.debug(actor.getSnapshot())
+    expect(actor.getSnapshot().value).toBe('success')
+    expect(actor.getSnapshot().context.greeting).toBe('hello')
+    expect(actor.getSnapshot().status).toBe('active')
+  })
+
+  test('get context from countMachine', () => {
+    const actor = createActor(feedbackMachine).start()
+    actor.send({ type: 'COUNT' })
+    console.debug('### count event actor.getSnapshot()')
+    console.debug(actor.getSnapshot())
+    // returnHelloがfinalまで無事に到達したのでonDoneが発火する
+    expect(actor.getSnapshot().value).toBe('getCount')
+    expect(actor.getSnapshot().context.count).toBe(0)
+    // countMachineのcontext.countを取得したい
+
     expect(actor.getSnapshot().status).toBe('active')
   })
 })
