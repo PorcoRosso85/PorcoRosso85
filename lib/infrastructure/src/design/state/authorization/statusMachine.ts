@@ -3,42 +3,53 @@ import { createMachine } from 'xstate'
 export const machine = createMachine(
   {
     context: {
-      status: 'isNotSession',
+      status: '',
     },
     id: '/auth/status',
     initial: 'checkSessionIs',
     states: {
       checkSessionIs: {
-        invoke: {
-          input: {},
-          src: 'checkSessionIdIs',
-        },
+        always: [
+          {
+            target: 'redirectLogin',
+            guard: 'checkSessionIs',
+          },
+          {
+            target: 'isNotSession',
+          },
+        ],
       },
-      isSession: {
-        exit: {
-          type: 'updateContext',
-        },
+      redirectLogin: {
         type: 'final',
       },
       isNotSession: {
-        exit: {
-          type: 'updateContext',
-        },
+        always: [
+          {
+            target: 'isJwt',
+            guard: 'checkJwt',
+          },
+          {
+            target: 'redirectLogin',
+          },
+        ],
+      },
+      isJwt: {
         type: 'final',
       },
     },
-    types: { context: {} as { status: string } },
+    types: { events: {} as { type: '' }, context: {} as { status: string } },
   },
   {
-    actions: {
-      updateContext: ({ context, event }) => {},
+    actions: {},
+    actors: {},
+    guards: {
+      checkSessionIs: ({ context, event }, params) => {
+        return false
+      },
+      checkJwt: ({ context, event }, params) => {
+        return false
+      },
     },
-    actors: {
-      checkSessionIdIs: fromPromise({
-        /* ... */
-      }),
-    },
-    guards: {},
     delays: {},
   },
 )
