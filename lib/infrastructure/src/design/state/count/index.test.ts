@@ -59,7 +59,7 @@ const countMachine = createMachine(
         count: ({ context }) => context.count - 1,
       }),
       set: assign({
-        count: ({ event }) => event.value,
+        count: () => 10,
       }),
     },
     actors: {},
