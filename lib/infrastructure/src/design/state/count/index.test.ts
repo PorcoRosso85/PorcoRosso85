@@ -1,28 +1,72 @@
 import { describe, test, expect } from 'vitest'
 import { createMachine, assign, createActor } from 'xstate'
 
-const countMachine = createMachine({
-  context: {
-    count: 0,
+const countMachine = createMachine(
+  //   context: {
+  //     count: 0,
+  //   },
+  //   on: {
+  //     INC: {
+  //       actions: assign({
+  //         count: ({ context }) => context.count + 1,
+  //       }),
+  //     },
+  //     DEC: {
+  //       actions: assign({
+  //         count: ({ context }) => context.count - 1,
+  //       }),
+  //     },
+  //     SET: {
+  //       actions: assign({
+  //         count: ({ event }) => event.value,
+  //       }),
+  //     },
+  //   },
+  // })
+  {
+    context: {
+      count: 0,
+    },
+    id: 'countMachine',
+    on: {
+      INC: {
+        actions: {
+          type: 'inline:(machine)#INC[-1]#transition[0]',
+        },
+      },
+      DEC: {
+        actions: {
+          type: 'inline:(machine)#DEC[-1]#transition[0]',
+        },
+      },
+      SET: {
+        actions: {
+          type: 'inline:(machine)#SET[-1]#transition[0]',
+        },
+      },
+    },
+    types: {
+      events: {} as { type: 'INC' } | { type: 'DEC' } | { type: 'SET' },
+      context: {} as { count: number },
+    },
   },
-  on: {
-    INC: {
-      actions: assign({
+  {
+    actions: {
+      'inline:(machine)#INC[-1]#transition[0]': assign({
         count: ({ context }) => context.count + 1,
       }),
-    },
-    DEC: {
-      actions: assign({
+      'inline:(machine)#DEC[-1]#transition[0]': assign({
         count: ({ context }) => context.count - 1,
       }),
-    },
-    SET: {
-      actions: assign({
+      'inline:(machine)#SET[-1]#transition[0]': assign({
         count: ({ event }) => event.value,
       }),
     },
+    actors: {},
+    guards: {},
+    delays: {},
   },
-})
+)
 
 export { countMachine }
 
