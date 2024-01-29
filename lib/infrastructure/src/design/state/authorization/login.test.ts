@@ -3,7 +3,7 @@ import { describe, test, expect } from 'vitest'
 import { createActor, createMachine } from 'xstate'
 import { createModel } from '@xstate/test'
 
-import { machine } from './loginMachine'
+import { machine } from './loginMachine.test'
 import { authLoginStates } from './loginStates'
 
 const result = ({ context, event }) => {

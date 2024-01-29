@@ -1,4 +1,4 @@
-export { machine as authLoginMachine } from './loginMachine'
+export { machine as authLoginMachine } from './loginMachine.test'
 export { authLoginStates } from './loginStates'
 
 export interface authContext {
