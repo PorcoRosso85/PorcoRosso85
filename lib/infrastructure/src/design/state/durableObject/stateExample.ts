@@ -2,14 +2,23 @@ import { describe, test, expect } from 'vitest'
 import { countMachine } from '../count/index.test'
 import { createActor } from 'xstate'
 
-class StatefulClass {
-  private state: number
-  private actor
+interface State {
+  state: number
+  actor: any
+  increment: () => void
+  decrement: () => void
+  setTen: () => void
+  getState: () => number
+}
+
+class ImplState implements State {
+  state
+  actor
 
   constructor(initialState: number = 0) {
     this.actor = createActor(countMachine).start()
     this.state = this.actor.getSnapshot().context.count
-    console.debug('### StatefulClass constructor', this.state)
+    console.debug('### ImplState constructor', this.state)
   }
 
   updateState() {
@@ -36,29 +45,29 @@ class StatefulClass {
   }
 }
 
-describe('StatefulClass', () => {
-  const statefulClass = new StatefulClass()
+describe('ImplState', () => {
+  const implState = new ImplState()
 
   test('should be defined', () => {
-    expect(statefulClass).toBeDefined()
+    expect(implState).toBeDefined()
   })
 
   test('should have a initial state', () => {
-    expect(statefulClass.getState()).toBe(1)
+    expect(implState.getState()).toBe(1)
   })
 
   test('should increment state', () => {
-    statefulClass.increment()
-    expect(statefulClass.getState()).toBe(2)
+    implState.increment()
+    expect(implState.getState()).toBe(2)
   })
 
   test('should decrement state', () => {
-    statefulClass.decrement()
-    expect(statefulClass.getState()).toBe(1)
+    implState.decrement()
+    expect(implState.getState()).toBe(1)
   })
 
   test('should set state to 10', () => {
-    statefulClass.setTen()
-    expect(statefulClass.getState()).toBe(10)
+    implState.setTen()
+    expect(implState.getState()).toBe(10)
   })
 })

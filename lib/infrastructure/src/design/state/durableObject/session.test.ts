@@ -1,6 +1,26 @@
 import { describe, test, expect } from 'vitest'
 
-let session = {}
+class State {
+  state: any
+
+  constructor(initialState: any = {}) {
+    this.state = initialState
+  }
+
+  updateState(callback: any) {
+    this.state = callback(this.state)
+  }
+}
+
+interface SessionStore {
+  sessionId: string
+  sessionData: {
+    userId: string
+    email: string
+  }
+}
+
+let session: SessionStore
 
 const addSession = (store: any, sessionId: string, sessionData: any) => {
   return { ...store, [sessionId]: sessionData }
@@ -18,6 +38,8 @@ const destroySession = (store: any, sessionId: string) => {
   const { [sessionId]: _, ...rest } = store
   return rest
 }
+
+export { SessionStore, addSession, updateSession, getSession, destroySession }
 
 describe('session', () => {
   const sessionId = crypto.randomUUID()
@@ -54,5 +76,13 @@ describe('session', () => {
     session = destroySession(session, sessionId)
     console.debug('### session destroyed exacly', session)
     expect(session).toEqual({})
+  })
+
+  test('update State class with callback', () => {
+    const state = new State()
+    state.updateState((state) => {
+      return { ...state, test: 'test' }
+    })
+    expect(state.state).toEqual({ test: 'test' })
   })
 })
