@@ -1,0 +1,42 @@
+{
+	"folders": [
+		{
+			"name": "✨ /home/user/pjs/go_node/roccho2",
+			"path": "../../../../../.."
+		},
+		{
+			"name": "📦 @PorcoRosso85/application",
+			"path": "../../../../../application"
+		},
+		{
+			"name": "📦 @PorcoRosso85/auth",
+			"path": "../../../../../auth"
+		},
+		{
+			"name": "📦 @PorcoRosso85/core",
+			"path": "../../../../../core"
+		},
+		{
+			"name": "📦 @PorcoRosso85/dao",
+			"path": "../../../../../dao"
+		},
+		{
+			"name": "📦 @PorcoRosso85/infrastructure",
+			"path": "../../../.."
+		},
+		{
+			"name": "📦 @PorcoRosso85/statemodel",
+			"path": "../../../../../statemodel"
+		},
+		{
+			"name": "🚀 @PorcoRosso85/web",
+			"path": "../../../../../web"
+		}
+	],
+	"settings": {
+		"svg.preview.background": "editor",
+		"markdown.copyFiles.destination": {
+			"/README.md": "docs/images/${documentBaseName}/"
+		}
+	}
+}

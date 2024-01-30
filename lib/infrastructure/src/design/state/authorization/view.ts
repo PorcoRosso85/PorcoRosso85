@@ -3,78 +3,83 @@ import { createMachine } from 'xstate'
 export const machine = createMachine(
   {
     context: {
-      status: 'isNotAuthenticated',
+      auth_status: '',
     },
     id: '/auth',
-    initial: '/status',
+    initial: 'idle',
     states: {
-      '/status': {
-        invoke: {
-          input: {},
-          src: '/auth/status',
-          onDone: [
-            {
-              target: 'isSession',
-            },
-          ],
-          onError: [
-            {
-              target: 'isNotSession',
-            },
-          ],
+      idle: {
+        on: {
+          '/*': {
+            target: '/status',
+          },
         },
       },
+      '/status': {
+        always: [
+          {
+            target: 'isSession',
+            guard: 'authStatus',
+          },
+          {
+            target: 'isNotSession',
+          },
+        ],
+      },
       isSession: {
+        after: {
+          '500': {
+            target: '#/auth.idle',
+            actions: [],
+          },
+        },
         initial: '/logout',
         states: {
           '/logout': {
-            invoke: {
-              input: {},
-              src: '/auth/logout',
-              onDone: [
-                {
-                  target: 'deleteCookieFollowingHeader',
-                },
-              ],
+            after: {
+              '500': {
+                target: '#/auth.isSession.deleteCookieFollowingHeader',
+                actions: [],
+              },
             },
           },
           deleteCookieFollowingHeader: {},
         },
       },
       isNotSession: {
+        after: {
+          '500': {
+            target: '#/auth.idle',
+            actions: [],
+          },
+        },
         initial: '/login',
         states: {
           '/login': {
-            invoke: {
-              input: {},
-              src: '/auth/login',
-              onDone: [
-                {
-                  target: 'saveCookieWithHttponlyAndSecureFlag',
-                },
-              ],
+            after: {
+              '500': {
+                target: '#/auth.isNotSession.saveCookieWithHttponlyAndSecureFlag',
+                actions: [],
+              },
             },
           },
           saveCookieWithHttponlyAndSecureFlag: {},
         },
       },
     },
-    types: { events: {} as { type: '' }, context: {} as { status: string } },
+    types: {
+      events: {} as { type: '' } | { type: '/*' },
+      context: {} as { auth_status: string },
+    },
   },
   {
     actions: {},
-    actors: {
-      '/auth/login': fromPromise({
-        /* ... */
-      }),
-      '/auth/logout': fromPromise({
-        /* ... */
-      }),
-      '/auth/status': fromPromise({
-        /* ... */
-      }),
+    actors: {},
+    guards: {
+      authStatus: ({ context, event }, params) => {
+        return false
+      },
     },
-    guards: {},
     delays: {},
   },
 )
