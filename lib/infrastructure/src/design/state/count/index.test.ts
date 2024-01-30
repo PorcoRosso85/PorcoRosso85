@@ -95,7 +95,7 @@ describe('count', () => {
   test('should increment, then gotten with snapshot', async () => {
     const countActor = createActor(countMachine).start()
     countActor.send({ type: 'INC' })
-    console.debug(countActor.getSnapshot())
+    // console.debug(countActor.getSnapshot())
     expect(countActor.getSnapshot().context.count).toBe(2)
   })
 
