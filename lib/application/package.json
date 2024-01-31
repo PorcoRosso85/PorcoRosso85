@@ -11,6 +11,6 @@
   "license": "MIT",
   "dependencies": {
     "@PorcoRosso85/infrastructure": "workspace:^",
-    "hono": "^3.12.5"
+    "hono": "4.0.0-rc.2"
   }
 }

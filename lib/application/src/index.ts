@@ -42,7 +42,10 @@ export const extractFeatureMethods = (
   return Object.entries(features).map(([path, feature]) => {
     const method = feature.method
     const handler =
-      feature.handler !== undefined ? feature.handler : async (c: any) => c.html('Hello World')
+      feature.handler !== undefined
+        ? feature.handler
+        : // [] Result型を実装したとき、handlerはResultを返すか型テストする
+          async (c: any) => c.html('handler is undefined')
 
     return { method, end: feature.end, handler }
   })
