@@ -74,4 +74,25 @@ export const features: Features = {
     query: {},
     handler: async (c) => c.html('Hello User'),
   },
+  '/counter': {
+    method: 'get',
+    end: '/counter',
+    error: '',
+    query: {},
+    handler: async (c) =>
+      c.html(
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>counter</title>
+          </head>
+          <body>
+            <div id="root"></div>
+            // [] エンドポイントがどこにあるか、そしてCounter.tsxがどこにあるか
+            <script type="module" src="/src/components/Counter.tsx"></script>
+          </body>
+        </html>,
+      ),
+  },
 }
