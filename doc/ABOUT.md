@@ -25,10 +25,11 @@ permalink: /about/
 
 ## 資格
 
-- **普通自動車MT**: 2005年8月取得
+- **普通自動車/MT**: 2005年8月取得
 - **CCNA**: 2005年8月取得
-- **簿記2級**: 2007年12月取得
-- **会計士（1次）**: 2008年5月取得
+- **日商簿記2級**: 2007年12月取得
+- **日商簿記1級**: 2008年12月取得
+- **公認会計士（1次）**: 2008年5月取得
 - **TOEIC 650点**: 2008年9月取得
 
 ## 備考
@@ -46,24 +47,49 @@ permalink: /about/
 
 ※IT職種について
 
-- 7年11ヶ月
+- 9+年 （2015/02/01 ～ 現在
+  - ただし1.5年ほどブランクあり
 
 ### 1. 建設業 (2009/04/01 ～ 2015/01/31)
 
 ### 2. 広告業 (2015/02/01 ～ 2019/12/31)
+
+- **PJ概要**
+  - Web制作
+  - 5名
+  - SE, PGとして
+- **作業工程/作業区分**
+  - 要件定義
+  - 基本設計
+  - 製造
+  - 単体テスト
+  - リリース
+- **業務内容**
+  - Webサービス新規制作
+  - 契約、見積もり、要件定義
+  - 設計（画面、画面遷移図）
+  - 製造（レイアウト、決済機能、SNS連携、各種プラグイン組込等）
+  - テスト仕様書作成、テスト（単体、受入）
+  - リリース、障害対応、営業
+- **機種/OS/DB/言語/ツール 他**
+  - **OS:** Windows 10
+  - **言語:** HTML、CSS、JavaScript
+  - **ツール:** Git、WordPress、Notion、LinkTree、Shopify、PayPal、Stripe
 
 ### 3. 金融業 (2019/09/01 ～ 2021/03/31)
 
 - **PJ概要**
   - Webシステム開発
   - 3名
-  - メンバー → リーダー
+  - POとして
 - **作業工程/作業区分**
+  - 営業
   - 要件定義
   - 基本設計
   - 詳細設計
   - 製造
   - テスト
+  - 納品・請求
 - **業務内容**
   - データ管理Webシステム新規開発
   - 見積、調査（システム影響、導入効果）
@@ -73,16 +99,17 @@ permalink: /about/
   - 障害対応
 - **機種/OS/DB/アプリケーション/ツール 他**
   - **OS:** Linux (Ubuntu)
-  - **アプリケーション:** HTML、CSS、JavaScript (Node.js)、Python (Django)
+  - **アプリケーション:** HTML、CSS、JavaScript、Python/Django
   - **DB:** PostgreSQL
-  - **ツール:** Google スプレッドシート、Git、Visual Studio Code、Docker、Discord
+  - **インフラ:** Docker/Compose
+  - **ツール:** Git, Discord, GoogleWorkspace
 
 ### 4. 不動産業 (2021/04/01 ～ 2022/12/31)
 
 - **PJ概要**
-  - SaaS導入、Webシステム開発
+  - SaaS企画・設計、Webシステム開発
   - 1名
-  - メンバー
+  - POとして
 - **作業工程/作業区分**
   - 企画
   - 要件定義
@@ -95,19 +122,19 @@ permalink: /about/
   - 要件定義、設計（画面、画面遷移）
   - 製造（フロント、バックエンド）
   - テスト仕様書作成、テスト（単体）
-  - 障害対応
 - **機種/OS/DB/アプリケーション/ツール 他**
   - **OS:** Linux (Ubuntu)
-  - **アプリケーション:** Python (Django、TensorFlow、Optuna、MLflow)
+  - **アプリケーション:** Python/Django/TensorFlow/Optuna/MLflow
   - **DB:** SQLite3
-  - **ツール:** Git、Vim、Jupyter Notebook、Docker
+  - **インフラ:** Docker/Compose
+  - **ツール:** Git、VSCode、Jupyter
 
 ### 5. 情報通信業 (2023/01/01 ～ 2023/05/31)
 
 - **PJ概要**
   - スマートフォン向けアプリ開発
   - 5名
-  - メンバー
+  - SE, PGとして
 - **作業工程/作業区分**
   - 基本設計
   - 詳細設計
@@ -115,7 +142,7 @@ permalink: /about/
   - 単体テスト
 - **業務内容**
   - スマートフォン向けネイティブアプリの新規開発
-  - 設計（機能、DB）
+  - 設計（追加エンドポイント）
   - 製造（バックエンド）
   - 単体テスト、セキュリティテスト
   - コンテナ作成、障害対応
@@ -123,14 +150,15 @@ permalink: /about/
   - **OS:** Linux
   - **アプリケーション:** Python (Flask)
   - **DB:** MySQL
-  - **ツール:** Git、VSCode、Docker、Slack、Backlog、Teams
+  - **インフラ:** AWSLambda/Aurora
+  - **ツール:** Git, Slack、Backlog、Teams
 
 ### 6. 情報通信業 (2023/06/01 ～ 2023/08/31)
 
 - **PJ概要**
   - IoTアプリ開発
   - 5名
-  - メンバー
+  - SE, PGとして
 - **作業工程/作業区分**
   - 詳細設計
   - 製造
@@ -144,11 +172,53 @@ permalink: /about/
   - **OS:** Linux
   - **アプリケーション:** Python
   - **DB:** PostgreSQL, DynamoDB
-  - **ツール:** Git、VSCode、Docker、AWS Lambda, SQS, APIGW, DynamoDB
+  - **インフラ:** AWSLambda/APIGW/SQS
+  - **ツール:** Git, Red Mine
   
-### 7. TODO（2023/09/01 ～ 2024/02/28）
+### 7. 金融業（2023/09/01 ～ 現在
+
+- **PJ概要**
+  - Webシステム開発
+  - 2名
+  - PMとして
+- **作業工程/作業区分**
+  - 要件定義
+  - POC製造
+- **業務内容**
+  - 企業内経済圏インフラアプリケーションの新規開発
+  - 要件定義
+  - 設計
+  - 製造
+- **機種/OS/DB/アプリケーション/ツール 他**
+  - **OS:** Linux
+  - **アプリケーション:** Typescript, React, Node.js, Workerd
+  - **DB:** PostgreSQL
+  - **インフラ:** cloudflare
+  - **ツール:** Git
 
 ### 8. Saas事業（2024/03/01 ～ 現在
+
+- **PJ概要**
+  - SaaSサービス開発
+  - 5名
+  - SEとして
+- **作業工程/作業区分**
+  - 基本設計
+  - 詳細設計
+  - 製造
+  - 単体テスト
+  - 機能テスト
+- **業務内容**
+  - 自社内SaaSサービスの新規開発
+  - 設計（機能、DB）
+  - 製造（バックエンド）
+  - 単体テスト、セキュリティテスト
+- **機種/OS/DB/アプリケーション/ツール 他**
+  - **OS:** Linux
+  - **アプリケーション:** Python/Django
+  - **DB:** PostgreSQL
+  - **インフラ:** GCP App Engine
+  - **ツール:** Git, Backlog, Slack
   
 ## 各技術別
 
@@ -159,7 +229,7 @@ permalink: /about/
   - **PJ概要**: Webシステム開発、SaaSサービス開発、IoTアプリ開発
   
 ---
-
+<!-- 
 # 職務経歴
 
 | 項目       | 内容                          |
@@ -185,6 +255,8 @@ permalink: /about/
 | 2021/04/01 - 2022/12/31 | 不動産                 | SaaSサービス開発/運用  | SaaSサービス開発、Webシステム開発<br>要件定義、設計、開発、テスト、リリース、運用、保守、改修、機能追加、バグ修正 | [OS] Linux(Ubuntu)<br>[言語] Python(Django, TensorFlow, Optuna, MLflow)<br>[ツール] Git, Vim, Jupyter Notebook, Docker |
 | 2023/01/01 - 2023/05/31 | スマートフォン向けアプリ開発 | メンバー               | スマートフォン向けネイティブアプリの開発/運用<br>要件定義、設計、開発、テスト、リリース、運用、保守、改修、機能追加、バグ修正 | [OS] Linux<br>[言語] Python(Flask)<br>[DB] MySQL<br>[ツール] Git, VSCode, Docker, Slack, Backlog, Teams |
 | 2023/06/01 - 2023/08/31 | IoTアプリ開発/運用     | メンバー               | スマートフォン向けネイティブアプリの開発/運用<br>要件定義、設計、開発、テスト、リリース、運用、保守、改修、機能追加、バグ修正 | [OS] Linux<br>[言語] Python<br>[DB] PostgreSQL<br>[ツール] Git, VSCode, Docker, AWS Lambda, SQS, APIGW, DynamoDB |
+
+-->
 
 # 備考
 
@@ -213,25 +285,3 @@ permalink: /about/
   - **ツール:** Excel、CAD
 
 ### 2. 広告業 (2015/02/01 ～ 2019/12/31)
-
-- **PJ概要**
-  - Web制作
-  - 5名
-  - メンバー
-- **作業工程/作業区分**
-  - 要件定義
-  - 基本設計
-  - 製造
-  - 単体テスト
-  - リリース
-- **業務内容**
-  - Webサービス新規制作
-  - 契約、見積もり、要件定義
-  - 設計（画面、画面遷移図）
-  - 製造（レイアウト、決済機能、SNS連携、各種プラグイン組込等）
-  - テスト仕様書作成、テスト（単体、受入）
-  - リリース、障害対応、営業
-- **機種/OS/DB/言語/ツール 他**
-  - **OS:** Windows 10
-  - **言語:** HTML、CSS、JavaScript
-  - **ツール:** Git、WordPress、Notion、LinkTree、Shopify、PayPal、Stripe
