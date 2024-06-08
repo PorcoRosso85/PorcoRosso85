@@ -1,3 +1,9 @@
+---
+layout: page
+title: About Me
+permalink: /about/  
+---
+
 # 職務経歴
 
 ## 基本
