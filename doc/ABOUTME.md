@@ -1,10 +1,10 @@
 ---
 layout: page
 title: About Me
-permalink: /about/  
+permalink: /doc/aboutme/  
 ---
 
-# 職務経歴
+# [職務経歴](https://porcorosso85.github.io/PorcoRosso85/doc/aboutme/)
 
 ## 基本
 
@@ -51,6 +51,7 @@ permalink: /about/
   - ただし1.5年ほどブランクあり
 
 ### 1. 建設業 (2009/04/01 ～ 2015/01/31)
+※非IT業界であるため、下記備考欄に記載
 
 ### 2. 広告業 (2015/02/01 ～ 2019/12/31)
 
@@ -284,4 +285,3 @@ permalink: /about/
   - **OS:** Windows 7
   - **ツール:** Excel、CAD
 
-### 2. 広告業 (2015/02/01 ～ 2019/12/31)
